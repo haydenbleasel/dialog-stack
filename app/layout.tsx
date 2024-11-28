@@ -14,7 +14,7 @@ type RootLayoutProps = {
   children: ReactNode;
 };
 
-export const RootLayout = ({ children }: RootLayoutProps) => (
+const RootLayout = ({ children }: RootLayoutProps) => (
   <html lang="en">
     <body
       className={cn(
