@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { Analytics } from '@vercel/analytics/react';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 import type { Metadata } from 'next';
@@ -24,6 +25,7 @@ const RootLayout = ({ children }: RootLayoutProps) => (
       )}
     >
       <div className="prose prose-neutral mx-auto px-4 py-16">{children}</div>
+      <Analytics />
     </body>
   </html>
 );
