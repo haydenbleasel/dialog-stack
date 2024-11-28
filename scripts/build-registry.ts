@@ -63,7 +63,7 @@ const main = async () => {
       null,
       2
     );
-    const jsonPath = `${PUBLIC_FOLDER_BASE_PATH}/${component.name}.json`;
+    const jsonPath = `${PUBLIC_FOLDER_BASE_PATH}/registry.json`;
     await writeFileRecursive(jsonPath, json);
     console.log(json);
   }
