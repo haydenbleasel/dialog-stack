@@ -83,9 +83,13 @@ export default {
             },
             'h1 + p': {
               fontSize: theme('fontSize.lg'),
+              lineHeight: '1.4',
               color: theme('colors.muted.foreground'),
               maxWidth: '35rem',
               marginTop: 0,
+            },
+            'h2, h3': {
+              letterSpacing: theme('letterSpacing.tighter'),
             },
             table: {
               boxShadow: `0 0 0 1px ${theme('colors.border')}`,

@@ -1,15 +1,32 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import * as Portal from '@radix-ui/react-portal';
+import {
+  Children,
+  cloneElement,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import type {
+  ButtonHTMLAttributes,
+  Dispatch,
+  HTMLAttributes,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+  SetStateAction,
+} from 'react';
 
 type DialogStackContextType = {
   activeIndex: number;
-  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
+  setActiveIndex: Dispatch<SetStateAction<number>>;
   totalDialogs: number;
-  setTotalDialogs: React.Dispatch<React.SetStateAction<number>>;
+  setTotalDialogs: Dispatch<SetStateAction<number>>;
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   clickable: boolean;
 };
 
@@ -34,7 +51,7 @@ export const DialogStack = ({
   onOpenChange,
   clickable = false,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
+}: HTMLAttributes<HTMLDivElement> & {
   open?: boolean;
   clickable?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -71,25 +88,22 @@ export const DialogStackTrigger = ({
   onClick,
   asChild,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean }) => {
+}: ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean }) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
     throw new Error('DialogStackTrigger must be used within a DialogStack');
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     context.setIsOpen(true);
     onClick?.(e);
   };
 
   if (asChild && children) {
-    return React.cloneElement(children as React.ReactElement, {
+    return cloneElement(children as ReactElement, {
       onClick: handleClick,
-      className: cn(
-        className,
-        (children as React.ReactElement).props.className
-      ),
+      className: cn(className, (children as ReactElement).props.className),
       ...props,
     });
   }
@@ -115,7 +129,7 @@ export const DialogStackTrigger = ({
 export const DialogStackOverlay = ({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => {
+}: HTMLAttributes<HTMLDivElement>) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
@@ -145,15 +159,13 @@ export const DialogStackBody = ({
   children,
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
+}: HTMLAttributes<HTMLDivElement> & {
   children:
-    | React.ReactElement<DialogStackChildProps>[]
-    | React.ReactElement<DialogStackChildProps>;
+    | ReactElement<DialogStackChildProps>[]
+    | ReactElement<DialogStackChildProps>;
 }) => {
   const context = useContext(DialogStackContext);
-  const [totalDialogs, setTotalDialogs] = useState(
-    React.Children.count(children)
-  );
+  const [totalDialogs, setTotalDialogs] = useState(Children.count(children));
 
   if (!context) {
     throw new Error('DialogStackBody must be used within a DialogStack');
@@ -171,21 +183,21 @@ export const DialogStackBody = ({
         setTotalDialogs,
       }}
     >
-      <div
-        className={cn(
-          'pointer-events-none fixed inset-0 z-50 mx-auto flex w-full max-w-lg flex-col items-center justify-center',
-          className
-        )}
-        {...props}
-      >
-        <div className="pointer-events-auto relative flex w-full flex-col items-center justify-center">
-          {React.Children.map(children, (child, index) =>
-            React.isValidElement(child)
-              ? React.cloneElement(child, { index })
-              : child
+      <Portal.Root>
+        <div
+          className={cn(
+            'pointer-events-none fixed inset-0 z-50 mx-auto flex w-full max-w-lg flex-col items-center justify-center',
+            className
           )}
+          {...props}
+        >
+          <div className="pointer-events-auto relative flex w-full flex-col items-center justify-center">
+            {Children.map(children, (child, index) =>
+              cloneElement(child as ReactElement, { index })
+            )}
+          </div>
         </div>
-      </div>
+      </Portal.Root>
     </DialogStackContext.Provider>
   );
 };
@@ -196,7 +208,7 @@ export const DialogStackContent = ({
   index = 0,
   offset = 10,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
+}: HTMLAttributes<HTMLDivElement> & {
   index?: number;
   offset?: number;
 }) => {
@@ -262,7 +274,7 @@ export const DialogStackTitle = ({
   children,
   className,
   ...props
-}: React.HTMLAttributes<HTMLHeadingElement>) => (
+}: HTMLAttributes<HTMLHeadingElement>) => (
   <h2
     className={cn(
       'font-semibold text-lg leading-none tracking-tight',
@@ -278,7 +290,7 @@ export const DialogStackDescription = ({
   children,
   className,
   ...props
-}: React.HTMLAttributes<HTMLParagraphElement>) => (
+}: HTMLAttributes<HTMLParagraphElement>) => (
   <p className={cn('text-muted-foreground text-sm', className)} {...props}>
     {children}
   </p>
@@ -287,7 +299,7 @@ export const DialogStackDescription = ({
 export const DialogStackHeader = ({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+}: HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
       'flex flex-col space-y-1.5 text-center sm:text-left',
@@ -301,7 +313,7 @@ export const DialogStackFooter = ({
   children,
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+}: HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn('flex items-center justify-end space-x-2 pt-4', className)}
     {...props}
@@ -317,7 +329,7 @@ export const DialogStackNext = ({
   ...props
 }: {
   asChild?: boolean;
-} & React.HTMLAttributes<HTMLButtonElement>) => {
+} & HTMLAttributes<HTMLButtonElement>) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
@@ -331,12 +343,9 @@ export const DialogStackNext = ({
   };
 
   if (asChild && children) {
-    return React.cloneElement(children as React.ReactElement, {
+    return cloneElement(children as ReactElement, {
       onClick: handleNext,
-      className: cn(
-        className,
-        (children as React.ReactElement).props.className
-      ),
+      className: cn(className, (children as ReactElement).props.className),
       ...props,
     });
   }
@@ -363,10 +372,10 @@ export const DialogStackPrevious = ({
   asChild,
   ...props
 }: {
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
   asChild?: boolean;
-} & React.HTMLAttributes<HTMLButtonElement>) => {
+} & HTMLAttributes<HTMLButtonElement>) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
@@ -380,12 +389,9 @@ export const DialogStackPrevious = ({
   };
 
   if (asChild && children) {
-    return React.cloneElement(children as React.ReactElement, {
+    return cloneElement(children as ReactElement, {
       onClick: handlePrevious,
-      className: cn(
-        className,
-        (children as React.ReactElement).props.className
-      ),
+      className: cn(className, (children as ReactElement).props.className),
       ...props,
     });
   }

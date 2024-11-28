@@ -14,7 +14,7 @@ import {
 } from '@/registry/dialog-stack';
 
 export const Demo = () => (
-  <div className="not-prose flex aspect-video items-center justify-center rounded-lg bg-secondary">
+  <div className="not-prose flex aspect-video items-center justify-center rounded-lg border bg-secondary">
     <DialogStack clickable>
       <DialogStackTrigger asChild>
         <Button variant="outline">Show me</Button>
