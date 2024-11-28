@@ -50,6 +50,42 @@ export default function Home() {
           <p>Content</p>
           <DialogStackFooter>
             <DialogStackPrevious>Previous</DialogStackPrevious>
+            <DialogStackNext>Next</DialogStackNext>
+          </DialogStackFooter>
+        </DialogStackContent>
+
+        <DialogStackContent>
+          <DialogHeader>
+            <DialogStackTitle>Title</DialogStackTitle>
+            <DialogStackDescription>Description</DialogStackDescription>
+          </DialogHeader>
+          <p>Content</p>
+          <DialogStackFooter>
+            <DialogStackPrevious>Previous</DialogStackPrevious>
+            <DialogStackNext>Next</DialogStackNext>
+          </DialogStackFooter>
+        </DialogStackContent>
+
+        <DialogStackContent>
+          <DialogHeader>
+            <DialogStackTitle>Title</DialogStackTitle>
+            <DialogStackDescription>Description</DialogStackDescription>
+          </DialogHeader>
+          <p>Content</p>
+          <DialogStackFooter>
+            <DialogStackPrevious>Previous</DialogStackPrevious>
+            <DialogStackNext>Next</DialogStackNext>
+          </DialogStackFooter>
+        </DialogStackContent>
+
+        <DialogStackContent>
+          <DialogHeader>
+            <DialogStackTitle>Title</DialogStackTitle>
+            <DialogStackDescription>Description</DialogStackDescription>
+          </DialogHeader>
+          <p>Content</p>
+          <DialogStackFooter>
+            <DialogStackPrevious>Previous</DialogStackPrevious>
           </DialogStackFooter>
         </DialogStackContent>
       </DialogStackBody>

@@ -34,9 +34,6 @@ export const DialogStack = ({
   clickable?: boolean;
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [totalDialogs, setTotalDialogs] = useState(
-    React.Children.count(children)
-  );
   const [isOpen, setIsOpen] = useState(open);
 
   return (
@@ -44,14 +41,14 @@ export const DialogStack = ({
       value={{
         activeIndex,
         setActiveIndex,
-        totalDialogs,
-        setTotalDialogs,
+        totalDialogs: 0,
+        setTotalDialogs: () => {},
         isOpen,
         setIsOpen,
         clickable,
       }}
     >
-      <div className={cn('dialog-stack', className)} {...props}>
+      <div className={className} {...props}>
         {children}
       </div>
     </DialogStackContext.Provider>
@@ -83,7 +80,7 @@ export const DialogStackTrigger = (
       ref={ref}
       onClick={handleClick}
       className={cn(
-        'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium',
+        'inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium text-sm',
         'ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2',
         'focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
         'bg-primary text-primary-foreground hover:bg-primary/90',
@@ -114,7 +111,7 @@ export const DialogStackOverlay = (
       ref={ref}
       className={cn(
         'fixed inset-0 z-50 bg-black/80',
-        'data-[state=open]:animate-in data-[state=closed]:animate-out',
+        'data-[state=closed]:animate-out data-[state=open]:animate-in',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         className
       )}
@@ -128,44 +125,43 @@ export const DialogStackBody = (
   ref: React.Ref<HTMLDivElement>
 ) => {
   const context = useContext(DialogStackContext);
+  const [totalDialogs, setTotalDialogs] = useState(
+    React.Children.count(children)
+  );
 
   if (!context) {
     throw new Error('DialogStackBody must be used within a DialogStack');
   }
 
-  if (!context.isOpen) return null;
-
-  const childrenArray = React.Children.toArray(children);
+  if (!context.isOpen) {
+    return null;
+  }
 
   return (
-    <div
-      ref={ref}
-      className={cn(
-        'fixed inset-0 z-50 w-full flex flex-col justify-center items-center',
-        className
-      )}
-      {...props}
+    <DialogStackContext.Provider
+      value={{
+        ...context,
+        totalDialogs,
+        setTotalDialogs,
+      }}
     >
-      {childrenArray.map((child, index) => {
-        const distanceFromActive = index - context.activeIndex;
-        const scale = 1 - Math.abs(distanceFromActive) * 0.1;
-        const translateY =
-          distanceFromActive < 0
-            ? `${Math.abs(distanceFromActive) * 20}px`
-            : `-${Math.abs(distanceFromActive) * 20}px`;
-
-        return React.cloneElement(child as React.ReactElement, {
-          key: `dialog-${index}`,
-          index,
-          style: {
-            transform: `scale(${scale}) translateY(${translateY})`,
-            width: '100%',
-            maxWidth: 'lg',
-            zIndex: 50 - Math.abs(context.activeIndex - (index ?? 0)),
-          },
-        });
-      })}
-    </div>
+      <div
+        ref={ref}
+        className={cn(
+          'fixed inset-0 z-50 mx-auto flex w-full max-w-lg flex-col items-center justify-center',
+          className
+        )}
+        {...props}
+      >
+        <div className="relative flex w-full flex-col items-center justify-center">
+          {React.Children.map(children, (child, index) =>
+            React.isValidElement(child)
+              ? React.cloneElement(child, { index })
+              : child
+          )}
+        </div>
+      </div>
+    </DialogStackContext.Provider>
   );
 };
 
@@ -173,7 +169,7 @@ export const DialogStackContent = (
   {
     children,
     className,
-    index,
+    index = 0,
     ...props
   }: React.HTMLAttributes<HTMLDivElement> & { index?: number },
   ref: React.Ref<HTMLDivElement>
@@ -184,7 +180,9 @@ export const DialogStackContent = (
     throw new Error('DialogStackContent must be used within a DialogStack');
   }
 
-  if (!context.isOpen) return null;
+  if (!context.isOpen) {
+    return null;
+  }
 
   const handleClick = () => {
     if (context.clickable && context.activeIndex !== index) {
@@ -192,23 +190,44 @@ export const DialogStackContent = (
     }
   };
 
+  const distanceFromActive = index - context.activeIndex;
+  const translateY =
+    distanceFromActive < 0
+      ? `-${Math.abs(distanceFromActive) * 10}px`
+      : `${Math.abs(distanceFromActive) * 10}px`;
+
   return (
     <div
       ref={ref}
       onClick={handleClick}
       className={cn(
-        'w-full max-w-lg bg-background p-6 shadow-lg rounded-lg border h-auto transition-all',
-        context.activeIndex === index
-          ? 'max-h-none z-50 scale-100'
-          : 'max-h-4 overflow-hidden',
-        context.clickable && context.activeIndex !== index
-          ? 'cursor-pointer'
-          : '',
+        'h-auto w-full rounded-lg border bg-background shadow-lg p-6 transition-all duration-300',
+
         className
       )}
+      style={{
+        top: 0,
+        transform: `translateY(${translateY})`,
+        width: `calc(100% - ${Math.abs(distanceFromActive) * 10}px)`,
+        zIndex: 50 - Math.abs(context.activeIndex - (index ?? 0)),
+        position: distanceFromActive ? 'absolute' : 'relative',
+        opacity: distanceFromActive > 0 ? 0 : 1,
+        cursor:
+          context.clickable && context.activeIndex !== index
+            ? 'pointer'
+            : 'default',
+      }}
       {...props}
     >
-      {context.activeIndex === index ? children : null}
+      <div
+        className={cn(
+          'h-full w-full transition-all duration-300',
+          context.activeIndex !== index &&
+            'pointer-events-none select-none opacity-0'
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 };
@@ -221,7 +240,7 @@ export const DialogStackTitle = (
     <h2
       ref={ref}
       className={cn(
-        'text-lg font-semibold leading-none tracking-tight',
+        'font-semibold text-lg leading-none tracking-tight',
         className
       )}
       {...props}
@@ -299,7 +318,7 @@ export const DialogStackNext = ({
       type="button"
       onClick={handleNext}
       className={cn(
-        'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+        'inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
         className
       )}
       disabled={context.activeIndex >= context.totalDialogs - 1}
@@ -348,7 +367,7 @@ export const DialogStackPrevious = ({
       type="button"
       onClick={handlePrevious}
       className={cn(
-        'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+        'inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
         className
       )}
       disabled={context.activeIndex <= 0}
