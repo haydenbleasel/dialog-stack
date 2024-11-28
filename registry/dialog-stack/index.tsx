@@ -167,12 +167,12 @@ export const DialogStackBody = ({
     >
       <div
         className={cn(
-          'fixed inset-0 z-50 mx-auto flex w-full max-w-lg flex-col items-center justify-center',
+          'pointer-events-none fixed inset-0 z-50 mx-auto flex w-full max-w-lg flex-col items-center justify-center',
           className
         )}
         {...props}
       >
-        <div className="relative flex w-full flex-col items-center justify-center">
+        <div className="pointer-events-auto relative flex w-full flex-col items-center justify-center">
           {React.Children.map(children, (child, index) =>
             React.isValidElement(child)
               ? React.cloneElement(child, { index })
@@ -276,6 +276,19 @@ export const DialogStackDescription = ({
   <p className={cn('text-muted-foreground text-sm', className)} {...props}>
     {children}
   </p>
+);
+
+export const DialogStackHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      'flex flex-col space-y-1.5 text-center sm:text-left',
+      className
+    )}
+    {...props}
+  />
 );
 
 export const DialogStackFooter = ({
