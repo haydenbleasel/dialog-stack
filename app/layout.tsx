@@ -6,9 +6,36 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import './globals.css';
 
+const title = 'Dialog Stack';
+const description = 'Composable stacked dialogs for shadcn/ui.';
+const author = 'Hayden Bleasel';
+const twitterHandle = '@haydenbleasel';
+
 export const metadata: Metadata = {
-  title: 'Dialog Stack',
-  description: 'Composable stacked dialogs for shadcn/ui.',
+  title,
+  description,
+  applicationName: title,
+  authors: [{ name: author, url: 'https://www.haydenbleasel.com' }],
+  creator: author,
+  formatDetection: {
+    telephone: false,
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title,
+  },
+  openGraph: {
+    title,
+    description,
+    type: 'website',
+    siteName: title,
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: twitterHandle,
+  },
 };
 
 type RootLayoutProps = {
