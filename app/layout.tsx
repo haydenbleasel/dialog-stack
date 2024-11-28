@@ -23,7 +23,7 @@ export const RootLayout = ({ children }: RootLayoutProps) => (
         'touch-manipulation font-sans antialiased'
       )}
     >
-      <div className="prose prose-neutral mx-auto">{children}</div>
+      <div className="prose prose-neutral mx-auto py-16">{children}</div>
     </body>
   </html>
 );

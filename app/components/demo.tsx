@@ -12,6 +12,7 @@ import {
   DialogStackTitle,
   DialogStackTrigger,
 } from '@/registry/dialog-stack';
+
 export const Demo = () => (
   <div className="not-prose">
     <DialogStack clickable>

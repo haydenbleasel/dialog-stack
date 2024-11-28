@@ -1,20 +1,18 @@
 import createMdx from '@next/mdx';
 import {
-  type RehypeCodeOptions,
   rehypeCode,
   remarkGfm,
   remarkHeading,
 } from 'fumadocs-core/mdx-plugins';
-import type { NextConfig } from 'next';
 
-const rehypeCodeOptions: RehypeCodeOptions = {
+const rehypeCodeOptions = {
   themes: {
-    light: 'catppuccin-mocha',
-    dark: 'catppuccin-mocha',
+    light: 'vitesse-light',
+    dark: 'vitesse-dark',
   },
 };
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   // Configure `pageExtensions` to include markdown and MDX files
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   // Optionally, add any other Next.js config below

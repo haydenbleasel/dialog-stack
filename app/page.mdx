@@ -6,12 +6,21 @@ import { Demo } from '@/app/components/demo';
 
 Stacked dialog component inspired by Radix UI Dialog. Accessible. Customizable. Open Source. Pre-styled for shadcn/ui.
 
-```tsx
-<DialogStack clickable>
+## Usage
+
+```tsx title="dialog.tsx"
+<DialogStack>
+  
+  {/* Trigger */}
   <DialogStackTrigger>Open</DialogStackTrigger>
+
+  {/* Overlay */}
   <DialogStackOverlay />
 
+  {/* Body */}
   <DialogStackBody>
+
+    {/* Dialog #1 */}
     <DialogStackContent>
       <DialogHeader>
         <DialogStackTitle>Title</DialogStackTitle>
@@ -23,18 +32,7 @@ Stacked dialog component inspired by Radix UI Dialog. Accessible. Customizable. 
       </DialogStackFooter>
     </DialogStackContent>
 
-    <DialogStackContent>
-      <DialogHeader>
-        <DialogStackTitle>Title</DialogStackTitle>
-        <DialogStackDescription>Description</DialogStackDescription>
-      </DialogHeader>
-      <p>Content</p>
-      <DialogStackFooter>
-        <DialogStackPrevious>Previous</DialogStackPrevious>
-        <DialogStackNext>Next</DialogStackNext>
-      </DialogStackFooter>
-    </DialogStackContent>
-
+    {/* Dialog #2 */}
     <DialogStackContent>
       <DialogHeader>
         <DialogStackTitle>Title</DialogStackTitle>
@@ -47,6 +45,7 @@ Stacked dialog component inspired by Radix UI Dialog. Accessible. Customizable. 
       </DialogStackFooter>
     </DialogStackContent>
 
+    {/* Dialog #3 */}
     <DialogStackContent>
       <DialogHeader>
         <DialogStackTitle>Title</DialogStackTitle>
@@ -59,6 +58,7 @@ Stacked dialog component inspired by Radix UI Dialog. Accessible. Customizable. 
       </DialogStackFooter>
     </DialogStackContent>
 
+    {/* Dialog #4 */}
     <DialogStackContent>
       <DialogHeader>
         <DialogStackTitle>Title</DialogStackTitle>
@@ -71,6 +71,20 @@ Stacked dialog component inspired by Radix UI Dialog. Accessible. Customizable. 
       </DialogStackFooter>
     </DialogStackContent>
 
+    {/* Dialog #5 */}
+    <DialogStackContent>
+      <DialogHeader>
+        <DialogStackTitle>Title</DialogStackTitle>
+        <DialogStackDescription>Description</DialogStackDescription>
+      </DialogHeader>
+      <p>Content</p>
+      <DialogStackFooter>
+        <DialogStackPrevious>Previous</DialogStackPrevious>
+        <DialogStackNext>Next</DialogStackNext>
+      </DialogStackFooter>
+    </DialogStackContent>
+
+    {/* Dialog #6 */}
     <DialogStackContent>
       <DialogHeader>
         <DialogStackTitle>Title</DialogStackTitle>
@@ -84,3 +98,27 @@ Stacked dialog component inspired by Radix UI Dialog. Accessible. Customizable. 
   </DialogStackBody>
 </DialogStack>
 ```
+
+## Props
+
+All components accept the standard attributes relevant to their element and the `className` prop for custom styling. Below are the custom props for each component.
+
+### DialogStack
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `clickable` | `boolean` | `false` | Whether the dialog can be clicked to open |
+| `open` | `boolean` | `false` | Whether the dialog is open |
+| `onOpenChange` | `(open: boolean) => void` | `undefined` | Callback function to be called when the dialog is opened or closed |
+
+### DialogStackTrigger
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `asChild` | `boolean` | `false` | Whether the component should render the child as a React element |
+
+### DialogStackContent
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `offset` | `number` | `10` | The offset of the dialog |

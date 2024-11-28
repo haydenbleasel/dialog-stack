@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type DialogStackContextType = {
   activeIndex: number;
@@ -31,14 +31,20 @@ export const DialogStack = ({
   children,
   className,
   open = false,
+  onOpenChange,
   clickable = false,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & {
   open?: boolean;
   clickable?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(open);
+
+  useEffect(() => {
+    onOpenChange?.(isOpen);
+  }, [isOpen, onOpenChange]);
 
   return (
     <DialogStackContext.Provider

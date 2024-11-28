@@ -64,6 +64,63 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      typography: (theme: (path: string) => string) => ({
+        DEFAULT: {
+          css: {
+            h1: {
+              maxWidth: '30rem',
+              textAlign: theme('textAlign.center'),
+              fontWeight: theme('fontWeight.bold'),
+              fontSize: theme('fontSize.3xl'),
+              lineHeight: theme('leading.tight'),
+              letterSpacing: theme('letterSpacing.tighter'),
+              '@media (min-width: 768px)': {
+                fontSize: theme('fontSize.5xl'),
+              },
+              '@media (min-width: 1024px)': {
+                lineHeight: theme('leading.[1.1]'),
+              },
+            },
+            table: {
+              boxShadow: `0 0 0 1px ${theme('colors.border')}`,
+              borderRadius: theme('borderRadius.md'),
+              overflow: 'hidden',
+              p: {
+                margin: 0,
+              },
+              th: {
+                paddingTop: '0.5714286em',
+                paddingRight: '0.5714286em',
+                paddingBottom: '0.5714286em',
+                paddingLeft: '0.5714286em',
+                backgroundColor: theme('colors.secondary.DEFAULT'),
+                '&:not(:last-child)': {
+                  borderRightWidth: '1px',
+                  borderRightColor: theme('colors.border'),
+                },
+              },
+              'tbody td, tfoot td': {
+                paddingLeft: '0.5714286em',
+                '&:not(:last-child)': {
+                  borderRightWidth: '1px',
+                  borderRightColor: theme('colors.border'),
+                },
+              },
+            },
+            code: {
+              backgroundColor: theme('colors.secondary.DEFAULT'),
+              paddingLeft: theme('spacing.2'),
+              paddingRight: theme('spacing.2'),
+              paddingTop: theme('spacing.1'),
+              paddingBottom: theme('spacing.1'),
+              borderRadius: theme('borderRadius.sm'),
+              '&::before, &::after': {
+                display: 'none',
+              },
+            },
+          },
+        },
+      }),
     },
   },
   plugins: [typography, animate],
