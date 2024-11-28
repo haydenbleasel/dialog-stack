@@ -188,8 +188,12 @@ export const DialogStackContent = ({
   children,
   className,
   index = 0,
+  offset = 10,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { index?: number }) => {
+}: React.HTMLAttributes<HTMLDivElement> & {
+  index?: number;
+  offset?: number;
+}) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
@@ -209,8 +213,8 @@ export const DialogStackContent = ({
   const distanceFromActive = index - context.activeIndex;
   const translateY =
     distanceFromActive < 0
-      ? `-${Math.abs(distanceFromActive) * 10}px`
-      : `${Math.abs(distanceFromActive) * 10}px`;
+      ? `-${Math.abs(distanceFromActive) * offset}px`
+      : `${Math.abs(distanceFromActive) * offset}px`;
 
   return (
     // biome-ignore lint/nursery/noStaticElementInteractions: "This is a clickable dialog"
