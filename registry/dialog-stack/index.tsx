@@ -23,6 +23,10 @@ const DialogStackContext = createContext<DialogStackContextType>({
   clickable: false,
 });
 
+type DialogStackChildProps = {
+  index?: number;
+};
+
 export const DialogStack = ({
   children,
   className,
@@ -55,15 +59,13 @@ export const DialogStack = ({
   );
 };
 
-export const DialogStackTrigger = (
-  {
-    children,
-    className,
-    onClick,
-    ...props
-  }: React.ButtonHTMLAttributes<HTMLButtonElement>,
-  ref: React.Ref<HTMLButtonElement>
-) => {
+export const DialogStackTrigger = ({
+  children,
+  className,
+  onClick,
+  asChild,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean }) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
@@ -75,9 +77,19 @@ export const DialogStackTrigger = (
     onClick?.(e);
   };
 
+  if (asChild && children) {
+    return React.cloneElement(children as React.ReactElement, {
+      onClick: handleClick,
+      className: cn(
+        className,
+        (children as React.ReactElement).props.className
+      ),
+      ...props,
+    });
+  }
+
   return (
     <button
-      ref={ref}
       onClick={handleClick}
       className={cn(
         'inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium text-sm',
@@ -94,36 +106,44 @@ export const DialogStackTrigger = (
   );
 };
 
-export const DialogStackOverlay = (
-  { className, ...props }: React.HTMLAttributes<HTMLDivElement>,
-  ref: React.Ref<HTMLDivElement>
-) => {
+export const DialogStackOverlay = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
     throw new Error('DialogStackOverlay must be used within a DialogStack');
   }
 
-  if (!context.isOpen) return null;
+  if (!context.isOpen) {
+    return null;
+  }
 
   return (
+    // biome-ignore lint/nursery/noStaticElementInteractions: "This is a clickable overlay"
     <div
-      ref={ref}
       className={cn(
         'fixed inset-0 z-50 bg-black/80',
         'data-[state=closed]:animate-out data-[state=open]:animate-in',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         className
       )}
+      onClick={() => context.setIsOpen(false)}
       {...props}
     />
   );
 };
 
-export const DialogStackBody = (
-  { children, className, ...props }: React.HTMLAttributes<HTMLDivElement>,
-  ref: React.Ref<HTMLDivElement>
-) => {
+export const DialogStackBody = ({
+  children,
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & {
+  children:
+    | React.ReactElement<DialogStackChildProps>[]
+    | React.ReactElement<DialogStackChildProps>;
+}) => {
   const context = useContext(DialogStackContext);
   const [totalDialogs, setTotalDialogs] = useState(
     React.Children.count(children)
@@ -146,7 +166,6 @@ export const DialogStackBody = (
       }}
     >
       <div
-        ref={ref}
         className={cn(
           'fixed inset-0 z-50 mx-auto flex w-full max-w-lg flex-col items-center justify-center',
           className
@@ -165,15 +184,12 @@ export const DialogStackBody = (
   );
 };
 
-export const DialogStackContent = (
-  {
-    children,
-    className,
-    index = 0,
-    ...props
-  }: React.HTMLAttributes<HTMLDivElement> & { index?: number },
-  ref: React.Ref<HTMLDivElement>
-) => {
+export const DialogStackContent = ({
+  children,
+  className,
+  index = 0,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { index?: number }) => {
   const context = useContext(DialogStackContext);
 
   if (!context) {
@@ -197,11 +213,11 @@ export const DialogStackContent = (
       : `${Math.abs(distanceFromActive) * 10}px`;
 
   return (
+    // biome-ignore lint/nursery/noStaticElementInteractions: "This is a clickable dialog"
     <div
-      ref={ref}
       onClick={handleClick}
       className={cn(
-        'h-auto w-full rounded-lg border bg-background shadow-lg p-6 transition-all duration-300',
+        'h-auto w-full rounded-lg border bg-background p-6 shadow-lg transition-all duration-300',
 
         className
       )}
@@ -232,53 +248,44 @@ export const DialogStackContent = (
   );
 };
 
-export const DialogStackTitle = (
-  { children, className, ...props }: React.HTMLAttributes<HTMLHeadingElement>,
-  ref: React.Ref<HTMLHeadingElement>
-) => {
-  return (
-    <h2
-      ref={ref}
-      className={cn(
-        'font-semibold text-lg leading-none tracking-tight',
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </h2>
-  );
-};
+export const DialogStackTitle = ({
+  children,
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLHeadingElement>) => (
+  <h2
+    className={cn(
+      'font-semibold text-lg leading-none tracking-tight',
+      className
+    )}
+    {...props}
+  >
+    {children}
+  </h2>
+);
 
-export const DialogStackDescription = (
-  { children, className, ...props }: React.HTMLAttributes<HTMLParagraphElement>,
-  ref: React.Ref<HTMLParagraphElement>
-) => {
-  return (
-    <p
-      ref={ref}
-      className={cn('text-sm text-muted-foreground', className)}
-      {...props}
-    >
-      {children}
-    </p>
-  );
-};
+export const DialogStackDescription = ({
+  children,
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLParagraphElement>) => (
+  <p className={cn('text-muted-foreground text-sm', className)} {...props}>
+    {children}
+  </p>
+);
 
-export const DialogStackFooter = (
-  { children, className, ...props }: React.HTMLAttributes<HTMLDivElement>,
-  ref: React.Ref<HTMLDivElement>
-) => {
-  return (
-    <div
-      ref={ref}
-      className={cn('flex items-center justify-end space-x-2 pt-4', className)}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-};
+export const DialogStackFooter = ({
+  children,
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn('flex items-center justify-end space-x-2 pt-4', className)}
+    {...props}
+  >
+    {children}
+  </div>
+);
 
 export const DialogStackNext = ({
   children,
@@ -286,8 +293,6 @@ export const DialogStackNext = ({
   asChild,
   ...props
 }: {
-  children?: React.ReactNode;
-  className?: string;
   asChild?: boolean;
 } & React.HTMLAttributes<HTMLButtonElement>) => {
   const context = useContext(DialogStackContext);
