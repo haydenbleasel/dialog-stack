@@ -211,7 +211,7 @@ export const DialogStackContent = ({
   }
 
   const handleClick = () => {
-    if (context.clickable && context.activeIndex !== index) {
+    if (context.clickable && context.activeIndex > index) {
       context.setActiveIndex(index ?? 0);
     }
   };
@@ -239,7 +239,7 @@ export const DialogStackContent = ({
         position: distanceFromActive ? 'absolute' : 'relative',
         opacity: distanceFromActive > 0 ? 0 : 1,
         cursor:
-          context.clickable && context.activeIndex !== index
+          context.clickable && context.activeIndex > index
             ? 'pointer'
             : 'default',
       }}

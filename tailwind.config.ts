@@ -69,17 +69,23 @@ export default {
           css: {
             h1: {
               maxWidth: '30rem',
-              textAlign: theme('textAlign.center'),
               fontWeight: theme('fontWeight.bold'),
               fontSize: theme('fontSize.3xl'),
               lineHeight: theme('leading.tight'),
               letterSpacing: theme('letterSpacing.tighter'),
+              marginBottom: theme('spacing.4'),
               '@media (min-width: 768px)': {
                 fontSize: theme('fontSize.5xl'),
               },
               '@media (min-width: 1024px)': {
                 lineHeight: theme('leading.[1.1]'),
               },
+            },
+            'h1 + p': {
+              fontSize: theme('fontSize.lg'),
+              color: theme('colors.muted.foreground'),
+              maxWidth: '35rem',
+              marginTop: 0,
             },
             table: {
               boxShadow: `0 0 0 1px ${theme('colors.border')}`,
