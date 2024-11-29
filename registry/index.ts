@@ -18,7 +18,7 @@ export const ui: Registry = [
     files: [
       {
         path: 'dialog-stack.tsx',
-        type: 'registry:component',
+        type: 'registry:ui',
       },
     ],
   },

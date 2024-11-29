@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "bun scripts/build-registry.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
