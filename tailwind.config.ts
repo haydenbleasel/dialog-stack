@@ -111,6 +111,7 @@ export default {
               },
               'tbody td, tfoot td': {
                 paddingLeft: '0.5714286em',
+                paddingRight: '0.5714286em',
                 '&:not(:last-child)': {
                   borderRightWidth: '1px',
                   borderRightColor: theme('colors.border'),
