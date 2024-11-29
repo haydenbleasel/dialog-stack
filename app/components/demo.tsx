@@ -24,71 +24,97 @@ export const Demo = () => (
       <DialogStackBody>
         <DialogStackContent>
           <DialogStackHeader>
-            <DialogStackTitle>Title</DialogStackTitle>
-            <DialogStackDescription>Description</DialogStackDescription>
+            <DialogStackTitle>I'm the first dialog</DialogStackTitle>
+            <DialogStackDescription>
+              With a fancy description
+            </DialogStackDescription>
           </DialogStackHeader>
-          <p>Content</p>
-          <DialogStackFooter>
-            <DialogStackNext>Next</DialogStackNext>
+          <DialogStackFooter className="justify-end">
+            <DialogStackNext asChild>
+              <Button variant="outline">Next</Button>
+            </DialogStackNext>
           </DialogStackFooter>
         </DialogStackContent>
 
         <DialogStackContent>
           <DialogStackHeader>
-            <DialogStackTitle>Title</DialogStackTitle>
-            <DialogStackDescription>Description</DialogStackDescription>
+            <DialogStackTitle>I'm the second dialog</DialogStackTitle>
+            <DialogStackDescription>
+              With a fancy description
+            </DialogStackDescription>
           </DialogStackHeader>
-          <p>Content</p>
-          <DialogStackFooter>
-            <DialogStackPrevious>Previous</DialogStackPrevious>
-            <DialogStackNext>Next</DialogStackNext>
+          <DialogStackFooter className="justify-between">
+            <DialogStackPrevious asChild>
+              <Button variant="outline">Previous</Button>
+            </DialogStackPrevious>
+            <DialogStackNext asChild>
+              <Button variant="outline">Next</Button>
+            </DialogStackNext>
           </DialogStackFooter>
         </DialogStackContent>
 
         <DialogStackContent>
           <DialogStackHeader>
-            <DialogStackTitle>Title</DialogStackTitle>
-            <DialogStackDescription>Description</DialogStackDescription>
+            <DialogStackTitle>I'm the third dialog</DialogStackTitle>
+            <DialogStackDescription>
+              With a fancy description
+            </DialogStackDescription>
           </DialogStackHeader>
-          <p>Content</p>
-          <DialogStackFooter>
-            <DialogStackPrevious>Previous</DialogStackPrevious>
-            <DialogStackNext>Next</DialogStackNext>
+          <DialogStackFooter className="justify-between">
+            <DialogStackPrevious asChild>
+              <Button variant="outline">Previous</Button>
+            </DialogStackPrevious>
+            <DialogStackNext asChild>
+              <Button variant="outline">Next</Button>
+            </DialogStackNext>
           </DialogStackFooter>
         </DialogStackContent>
 
         <DialogStackContent>
           <DialogStackHeader>
-            <DialogStackTitle>Title</DialogStackTitle>
-            <DialogStackDescription>Description</DialogStackDescription>
+            <DialogStackTitle>I'm the fourth dialog</DialogStackTitle>
+            <DialogStackDescription>
+              With a fancy description
+            </DialogStackDescription>
           </DialogStackHeader>
-          <p>Content</p>
-          <DialogStackFooter>
-            <DialogStackPrevious>Previous</DialogStackPrevious>
-            <DialogStackNext>Next</DialogStackNext>
+          <DialogStackFooter className="justify-between">
+            <DialogStackPrevious asChild>
+              <Button variant="outline">Previous</Button>
+            </DialogStackPrevious>
+            <DialogStackNext asChild>
+              <Button variant="outline">Next</Button>
+            </DialogStackNext>
           </DialogStackFooter>
         </DialogStackContent>
 
         <DialogStackContent>
           <DialogStackHeader>
-            <DialogStackTitle>Title</DialogStackTitle>
-            <DialogStackDescription>Description</DialogStackDescription>
+            <DialogStackTitle>I'm the fifth dialog</DialogStackTitle>
+            <DialogStackDescription>
+              With a fancy description
+            </DialogStackDescription>
           </DialogStackHeader>
-          <p>Content</p>
-          <DialogStackFooter>
-            <DialogStackPrevious>Previous</DialogStackPrevious>
-            <DialogStackNext>Next</DialogStackNext>
+          <DialogStackFooter className="justify-between">
+            <DialogStackPrevious asChild>
+              <Button variant="outline">Previous</Button>
+            </DialogStackPrevious>
+            <DialogStackNext asChild>
+              <Button variant="outline">Next</Button>
+            </DialogStackNext>
           </DialogStackFooter>
         </DialogStackContent>
 
         <DialogStackContent>
           <DialogStackHeader>
-            <DialogStackTitle>Title</DialogStackTitle>
-            <DialogStackDescription>Description</DialogStackDescription>
+            <DialogStackTitle>I'm the sixth dialog</DialogStackTitle>
+            <DialogStackDescription>
+              With a fancy description
+            </DialogStackDescription>
           </DialogStackHeader>
-          <p>Content</p>
-          <DialogStackFooter>
-            <DialogStackPrevious>Previous</DialogStackPrevious>
+          <DialogStackFooter className="justify-start">
+            <DialogStackPrevious asChild>
+              <Button variant="outline">Previous</Button>
+            </DialogStackPrevious>
           </DialogStackFooter>
         </DialogStackContent>
       </DialogStackBody>
