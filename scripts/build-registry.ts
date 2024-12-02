@@ -1,8 +1,8 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import type { registryItemFileSchema } from 'shadcn-ui/apps/www/registry/schema';
 import type { z } from 'zod';
 import { ui } from '../registry';
+import type { registryItemFileSchema } from '../registry/shadcn-ui';
 
 const REGISTRY_BASE_PATH = 'registry';
 const PUBLIC_FOLDER_BASE_PATH = 'public';

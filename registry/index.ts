@@ -1,4 +1,4 @@
-import type { Registry } from 'shadcn-ui/apps/www/registry/schema';
+import type { Registry } from './shadcn-ui';
 
 /*
  * As shadcn/ui custom registry components are undocumented, here are some notes:

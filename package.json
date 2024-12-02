@@ -39,7 +39,6 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "postcss": "^8",
-    "shadcn-ui": "github:shadcn-ui/ui",
     "tailwindcss": "^3.4.15",
     "typescript": "^5",
     "ultracite": "4.1.7"
