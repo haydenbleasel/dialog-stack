@@ -97,8 +97,8 @@ importers:
         specifier: ^5
         version: 5.7.2
       ultracite:
-        specifier: 4.1.7
-        version: 4.1.7
+        specifier: 4.1.14
+        version: 4.1.14
 
 packages:
 
@@ -966,6 +966,10 @@ packages:
 
   comma-separated-tokens@2.0.3:
     resolution: {integrity: sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==}
+
+  commander@12.1.0:
+    resolution: {integrity: sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==}
+    engines: {node: '>=18'}
 
   commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
@@ -1863,8 +1867,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  ultracite@4.1.7:
-    resolution: {integrity: sha512-LqUj6o3GVpFXtkr6R1xoBfWuN2E7xl+nZ38C64EY9HeKDbffi57bpk81atnB5xHST0Ryb3F0/hUlFaoDEU84Yg==}
+  ultracite@4.1.14:
+    resolution: {integrity: sha512-x/wsSJqRcWV1/q++pPE9b9nynH6F6T1LUUxvxNkUyyOZrFr3N7VuPUuujamkF7yvcc6YPl8fq5nfz7ehFCC16Q==}
     hasBin: true
 
   undici-types@6.20.0:
@@ -2746,6 +2750,8 @@ snapshots:
     optional: true
 
   comma-separated-tokens@2.0.3: {}
+
+  commander@12.1.0: {}
 
   commander@4.1.1: {}
 
@@ -4030,7 +4036,9 @@ snapshots:
 
   typescript@5.7.2: {}
 
-  ultracite@4.1.7: {}
+  ultracite@4.1.14:
+    dependencies:
+      commander: 12.1.0
 
   undici-types@6.20.0: {}
 
