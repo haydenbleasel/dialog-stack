@@ -2,12 +2,5 @@
 
 Composable stacked dialogs for shadcn/ui.
 
-## Installation
-
-```sh
-npx shadcn@latest add https://dialog-stack.haydenbleasel.com/registry.json
-```
-
-## Usage
-
-Read the [docs](https://dialog-stack.haydenbleasel.com/).
+> !NOTE
+> Dialog Stack has been merged into Kibo UI: https://github.com/haydenbleasel/kibo
